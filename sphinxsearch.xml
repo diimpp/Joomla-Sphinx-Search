@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
 
-<name>COM_SPHINX</name>
+<name>COM_SPHINXSEARCH</name>
 <creationDate>2011-04-04</creationDate>
 <author>Ivinco</author>
 <authorEmail>opensource@ivinco.com</authorEmail>
