@@ -76,7 +76,7 @@ class SphinxSearchModelConfiguration extends JModel
 	$config_array["index"] = JArrayHelper::getValue($array, "index");
 	$config->loadArray($config_array);
 
-	JFile::write($this->getConfig(), $config->toString("PHP", "sphinxconfig", array("class"=>"SphinxSearchConfig")));
+    JFile::write($this->getConfig(), $config->toString("PHP", array("class"=>"SphinxSearchConfig")));
 
 	$this->configuration = new SphinxSearchConfig();
     }
