@@ -45,10 +45,7 @@ require_once(JPATH_COMPONENT_ADMINISTRATOR . DS . 'configuration.php');
  
 
 /**
- * Hello Model
- *
- * @package    Joomla.Tutorials
- * @subpackage Components
+ * SphinxSearch Model
  */
 class SphinxSearchModelSearch extends JModel
 {
