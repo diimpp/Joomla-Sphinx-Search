@@ -40,11 +40,11 @@ $document = JFactory::getDocument();
 $document->addScriptDeclaration(
 "
 var adminOptions = new Object({
-	testURL : \"".$application->getSiteURL()."administrator/index.php?option=com_sphinxsearch&task=test&format=raw\"
+	testURL : \"" . JURI::base() . "administrator/index.php?option=com_sphinxsearch&task=test&format=raw\"
 });
 ");
 
-$document->addScript($application->getSiteURL() . "media/com_sphinxsearch/js/jsphinxsearch.js");
+$document->addScript(JURI::base() . "media/com_sphinxsearch/js/jsphinxsearch.js");
 
 JToolBarHelper::title(JText::_('SphinxSearch Configuration'), 'config.png');
 
