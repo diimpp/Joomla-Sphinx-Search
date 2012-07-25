@@ -56,7 +56,7 @@ class SphinxSearchModelConfiguration extends JModel
      */
     public function getConfig()
     {
-	return JPATH_ROOT.DS."administrator".DS."components".DS."com_sphinxsearch".DS."configuration.php";
+	    return JPATH_COMPONENT_ADMINISTRATOR . DS . "configuration.php";
     }
 
     public function getParam($name)
