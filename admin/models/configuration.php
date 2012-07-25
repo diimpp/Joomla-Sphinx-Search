@@ -76,6 +76,7 @@ class SphinxSearchModelConfiguration extends JModel
 	$config_array["index"] = JArrayHelper::getValue($array, "index");
 	$config->loadArray($config_array);
 
+    // TODO: Add no direct access. (2012-07-25 Wed 05:41 PM (NOVT), Dmitri Perunov)
     JFile::write($this->getConfig(), $config->toString("PHP", array("class"=>"SphinxSearchConfig")));
 
 	$this->configuration = new SphinxSearchConfig();
