@@ -39,9 +39,10 @@ jimport( 'joomla.application.component.model' );
 jimport('joomla.error.log');
 jimport('joomla.html.pagination');
 
-require_once(JPATH_SITE.DS.'components'.DS.'com_content'.DS.'helpers'.DS.'route.php');
-
-require_once(JPATH_ROOT.DS."administrator".DS."components".DS."com_sphinxsearch".DS."configuration.php");
+require_once(JPATH_SITE . DS . 'components' . DS . 'com_content' . DS .
+    'helpers' . DS . 'route.php');
+require_once(JPATH_COMPONENT_ADMINISTRATOR . DS . 'configuration.php');
+ 
 
 /**
  * Hello Model
