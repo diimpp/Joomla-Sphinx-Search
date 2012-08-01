@@ -28,9 +28,9 @@
     <folder>models</folder>
  </files>
 
-<media destination="com_sphinxsearch" folder="css">
+<media destination="com_sphinxsearch" folder="media">
     <filename>index.html</filename>
-    <filename>sphinxsearch.css</filename>
+    <folder>css</folder>
 </media>
 
 <administration>
