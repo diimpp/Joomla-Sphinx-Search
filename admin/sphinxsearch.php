@@ -34,9 +34,20 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Require the base controller
-
 require_once(JPATH_COMPONENT.DS.'controller.php');
-require_once(JPATH_ROOT.DS."components".DS."com_sphinxsearch".DS."sphinxapi.php");
+
+// Require sphinx search api
+jimport('joomla.filesystem.file');
+define('SPHINXAPI_RLTV', 'sphinxapi.php');
+define('SPHINXAPI_LIB', JPATH_LIBRARIES . DS . 'sphinx' . DS . SPHINXAPI_RLTV);
+define('SPHINXAPI_ABSLT', '/usr/share/sphinx/api/' . SPHINXAPI_RLTV);
+if (JFile::exists(SPHINXAPI_RLTV)) {
+    require_once(SPHINXAPI_RLTV);
+} elseif (JFile::exists(SPHINXAPI_LIB)) {
+    require_once(SPHINXAPI_LIB);
+} elseif (JFile::exists(SPHINXAPI_ABSLT)) {
+    require_once(SPHINXAPI_ABSLT);
+}
 
 // Require specific controller if requested
 if(true == ($controller = JRequest::getWord('controller'))) {
