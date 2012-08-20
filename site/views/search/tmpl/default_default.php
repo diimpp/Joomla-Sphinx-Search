@@ -30,24 +30,31 @@
  *
  */
 
-// no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+//no direct access
+defined('_JEXEC') or die('Restricted access');
+?>
+<?php if ($this->get("Total") > 0) : ?>
+    <div class="sphinx-total-results">
+        <?php echo $this->pagination->getResultsCounter(); ?>
+    </div>
+<?php endif; ?>
+<form>
+    <input type="hidden" name="searchword" value="<?php echo $this->query; ?>" />
+    <input type="hidden" name="limitstart" value="<?php echo $this->pagination->limitstart; ?>" />
+    <?php echo $this->pagination->getLimitBox(); ?>
+</form>
 
-jimport( 'joomla.application.component.view');
+<br /><br />
+    <?php if ($this->get("Total") == 0) : ?>
+            <div class="sphinx-no-results"><?php echo JText::_("No results found."); ?></div>
+        <?php else:?>
+            <div class="sphinx-results">
+            <?php foreach ($this->results as $result) : ?>
+                    <div class="sphinx-result">
+                            <div class="sphinx-result-title"><a href="<?php echo $this->unitcatalogMenuAlias . '/' . $result->alias; ?>"><?php echo $result->name; ?></a></div>
+                    </div>
+            <?php endforeach; ?>
+            </div>
 
-/**
- * HTML View class for the HelloWorld Component
- *
- * @package    HelloWorld
- */
-
-class SphinxSearchViewBasic extends JView
-{
-    function display($tpl = null)
-    {
-        $document = JFactory::getDocument();
-
-    	$document->addStyleSheet(JURI::base()."media/com_sphinxsearch/css/sphinxsearch.css");
-        parent::display($tpl);
-    }
-}
+        <?php endif; ?>
+<br /><br />

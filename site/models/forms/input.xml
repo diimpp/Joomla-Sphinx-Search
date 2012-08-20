@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields>
+        <fieldset name="input">
+            <field name="searchword"
+                type="text"
+                id="searchword"
+                class="span3 inputbox"
+                description="COM_SPHINXSEARCH_FORM_INPUT_DESC"
+                label="COM_SPHINXSEARCH_FORM_INPUT_LABEL"
+                size="50"
+                required="true"
+                />
+        </fieldset>
+    </fields>
+</form>
