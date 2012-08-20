@@ -128,7 +128,7 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Event handler.
      *
-     * Triggered by component search model.
+     * Triggered by com_sphinxsearch search model.
      *
      * @param string $query
      * @return array
