@@ -27,6 +27,10 @@
     <folder>models</folder>
  </files>
 
+ <languages folder="site">
+     <language tag="ru-RU">language/ru-RU/ru-RU.com_sphinxsearch.ini</language>
+ </languages>
+
 <media destination="com_sphinxsearch" folder="media">
     <filename>index.html</filename>
     <folder>css</folder>
@@ -53,5 +57,11 @@
         <folder>models</folder>
         <folder>views</folder>
     </files>
+
+    <languages folder="admin">
+        <language tag="ru-RU">language/ru-RU/ru-RU.com_sphinxsearch.ini</language>
+        <language tag="ru-RU">language/ru-RU/ru-RU.com_sphinxsearch.sys.ini</language>
+    </languages>
+
 </administration>
 </extension>
