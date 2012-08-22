@@ -49,6 +49,7 @@
         <filename>controller.php</filename>
         <filename>sphinxsearch.php</filename>
         <filename>configuration.php</filename>
+        <folder>helpers</folder>
         <folder>models</folder>
         <folder>views</folder>
     </files>
