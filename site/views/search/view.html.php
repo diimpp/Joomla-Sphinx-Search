@@ -47,7 +47,7 @@ class SphinxSearchViewSearch extends JView
 
 
         // Get auxiliary data from plugin.
-        $prepare = $model->getPrepare();
+        $prepare = $model->getParams();
 
 
         // Get menu alias.
