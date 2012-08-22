@@ -190,7 +190,7 @@ abstract class SphinxSearchAdapter extends JPlugin
             $this->_total       = 0;
             $this->_totalFound  = 0;
 
-            return false;
+            return true;
         }
 
         // TODO: Do we really need trim()? (2012-08-02 Thu 08:08 PM (NOVT), Dmitri Perunov)
@@ -224,16 +224,16 @@ abstract class SphinxSearchAdapter extends JPlugin
     protected function _getIds($query)
     {
         if (!isset($this->_matches)) {
-            $this->_search($query);
-
-            return array_keys($this->_matches);
+            if ($this->_search(&$query)) {
+                return array_keys($this->_matches);
+            }
         }
 
         return $this->_matches;
     }
 
     /**
-     * Get DB rows ids of search results.
+     * Getter of total found number results.
      *
      * @param string $query search query
      * @return array

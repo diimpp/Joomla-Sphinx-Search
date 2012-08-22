@@ -20,6 +20,46 @@ class SphinxSearchViewSearch extends JView
         $dispatcher = JDispatcher::getInstance();
         $pathway    = $app->getPathway();
         $menus      = $app->getMenu();
+        $menu       = $menus->getActive();
+        $params     = $app->getParams();
+
+
+        // Because the application sets a default page title, we need to get it
+        // right from the menu item itself.
+        if (is_object($menu)) {
+            $menu_params = new JRegistry;
+            $menu_params->loadString($menu->params);
+            if (!$menu_params->get('page_title')) {
+                $params->set('page_title',  JText::_('COM_SPHINXSEARCH_SEARCH'));
+            }   
+        }   
+        else {
+            $params->set('page_title',  JText::_('COM_SPHINXSEARCH_SEARCH'));
+        }   
+
+        $title = $params->get('page_title');
+        if ($app->getCfg('sitename_pagetitles', 0) == 1) {
+            $title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
+        }   
+        elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
+            $title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
+        }   
+        $this->document->setTitle($title);
+
+        if ($params->get('menu-meta_description'))
+        {   
+            $this->document->setDescription($params->get('menu-meta_description'));
+        }   
+
+        if ($params->get('menu-meta_keywords'))
+        {   
+            $this->document->setMetadata('keywords', $params->get('menu-meta_keywords'));
+        }   
+
+        if ($params->get('robots'))
+        {
+            $this->document->setMetadata('robots', $params->get('robots'));
+        }
 
 
         $model      = $this->getModel('search');
@@ -47,21 +87,21 @@ class SphinxSearchViewSearch extends JView
 
 
         // Get auxiliary data from plugin.
-        $prepare = $model->getParams();
+        $prmtrs = $model->getParams();
+        if ($prmtrs) {
+            // Get menu alias.
+            $menuAlias = $this->_getMenuAlias(
+                &$menus, $prmtrs['extension'], $prmtrs['template']
+            );
 
 
-        // Get menu alias.
-        $menuAlias = $this->_getMenuAlias(
-            &$menus, $prepare['extension'], $prepare['template']
-        );
-
-
-        // Get sublayout.
-        $this->subLayoutPath = $this->_getLayoutPath($prepare['extension'],
-            $prepare['template'], $prepare['layout']);
-        $this->subLayout = 'default';
-        if (false != $this->subLayoutPath) {
-            $this->subLayout = 'custom';
+            // Get sublayout.
+            $subLayoutPath = $this->_getLayoutPath($prmtrs['extension'],
+                $prmtrs['template'], $prmtrs['layout']);
+            $subLayout = 'default';
+            if (false != $subLayoutPath) {
+                $subLayout = 'custom';
+            }
         }
 
 
@@ -76,6 +116,9 @@ class SphinxSearchViewSearch extends JView
         $this->assignRef('results', $results);
         $this->assignRef('menuAlias', $menuAlias);
         $this->assignRef('total', $total);
+        $this->assignRef('subLayout', $subLayout);
+        $this->assignRef('subLayoutPath', $subLayoutPath);
+        $this->assignRef('params', $params);
 
 
     	//$document->addStyleSheet(JURI::base() . 'media/com_sphinxsearch/css/sphinxsearch.css');

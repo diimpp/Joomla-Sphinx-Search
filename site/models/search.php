@@ -128,15 +128,14 @@ class SphinxSearchModelSearch extends JModel
     private function _search($query) 
     {
         // TODO: Make some sanitization action on input. (2012-07-26 Thu 04:19 PM (NOVT), Dmitri Perunov)
-        if (!is_string($query)) {
+        if (empty($query) || !is_string($query)) {
             return false;
         }
 
-
         $plugins = JPluginHelper::getPlugin($this::PLUGINTYPE);
         if (empty($plugins)) {
-            // TODO: Return message to admin part that no sphinx
-            // plg enabled or installed. (2012-07-30 Mon 06:57 PM (NOVT), Dmitri Perunov)
+            // TODO: Return message to admin part that no sphinx plg
+            // enabled or installed. (2012-07-30 Mon 06:57 PM (NOVT), Dmitri Perunov)
             return false;
         }
 
@@ -146,13 +145,13 @@ class SphinxSearchModelSearch extends JModel
             $params     = $dispatcher->trigger('onPrepareSphinxSearch');
             $results    = $dispatcher->trigger('onSphinxSearch', $query);
 
+
             // HACK: An associative array was returned in another array with
             // numeric index. WTF? (2012-08-07 Tue 04:59 PM (NOVT), Dmitri Perunov)
             $this->_matches     = &$results[0]['matches'];
-            //$this->_matches     = &$results;
-            //$this->_searchTime  = &$results['time'];
+            //$this->_searchTime  = &$results[0]['time'];
             $this->_total       = &$results[0]['total'];
-            //$this->_totalFound  = &$results['total_found'];
+            //$this->_totalFound  = &$results[0]['total_found'];
             $this->_params      = &$params[0];
         }
 

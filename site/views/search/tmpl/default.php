@@ -4,8 +4,20 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 
+<?php if ($this->params->get('show_page_heading', 1)) : ?>
+<h1>
+    <?php if ($this->escape($this->params->get('page_heading'))) :?>
+        <?php echo $this->escape($this->params->get('page_heading')); ?>
+    <?php else : ?>
+        <?php echo $this->escape($this->params->get('page_title')); ?>
+    <?php endif; ?>
+</h1>
+<?php endif; ?>
+<br />
 <?php echo $this->loadTemplate('form'); ?>
-<?php if (!empty($this->total)) : ?>
+
+<?php 
+if (!empty($this->results)) : ?>
     <div class="sphinx-total-results">
         <?php echo $this->pagination->getResultsCounter(); ?>
     </div>
@@ -16,10 +28,11 @@ defined('_JEXEC') or die('Restricted access');
         <?php echo $this->pagination->getLimitBox(); ?>
     </div>
 </form>
-<?php else :
-echo JText::_('COM_SPHINXSEARCH_FORM_INPUT_NO_RESULTS');
-endif;
-?>
+<?php elseif (false === $this->results) : ?>
+    <?php echo JText::_('COM_SPHINXSEARCH_FORM_INPUT_NO_INPUT'); ?>
+<?php elseif (null === $this->results) : ?>
+    <?php echo JText::_('COM_SPHINXSEARCH_FORM_INPUT_NO_RESULTS'); ?>
+<?php endif; ?>
 
 <?php 
 switch ($this->subLayout) {
@@ -31,7 +44,6 @@ case 'default':
     echo $this->loadTemplate('default');
     break;
 default:
-    echo $this->loadTemplate('default');
     break;
 }
 ?>
