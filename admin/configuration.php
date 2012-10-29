@@ -1,6 +1,7 @@
 <?php
 class SphinxSearchConfig {
-	var $hostname = "localhost";
-	var $port = 9312;
-	var $index = "joomla_search";
+	public $hostname = 'localhost';
+	public $port = '9312';
+	public $index = 'test1';
 }
+?>
