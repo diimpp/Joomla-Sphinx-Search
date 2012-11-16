@@ -23,6 +23,7 @@
     <filename>controller.php</filename>
     <filename>sphinxsearch.php</filename>
     <filename>router.php</filename>
+    <folder>helpers</folder>
     <folder>views</folder>
     <folder>models</folder>
  </files>
