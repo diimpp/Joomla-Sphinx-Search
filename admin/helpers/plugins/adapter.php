@@ -112,7 +112,7 @@ abstract class SphinxSearchAdapter extends JPlugin
      */
 	public function __construct($subject, $config)
 	{
-		parent::__construct(&$subject, $config);
+        parent::__construct($subject, $config);
 
 		$this->_db = JFactory::getDBO();
 

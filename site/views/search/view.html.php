@@ -91,7 +91,7 @@ class SphinxSearchViewSearch extends JView
         if ($prmtrs) {
             // Get menu alias.
             $menuAlias = $this->_getMenuAlias(
-                &$menus, $prmtrs['extension'], $prmtrs['template']
+                $menus, $prmtrs['extension'], $prmtrs['template']
             );
 
 
