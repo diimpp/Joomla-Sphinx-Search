@@ -1,23 +1,31 @@
 <?php
+/**
+ * Component router.
+ *
+ * Part of Joomla Sphinx Search Component Package
+ *
+ * @package Joomla-Sphinx-Search-component
+ * @copyright Copyright (C) 2012-2013 Dmitri Perunov <dmitri.perunov@gmail.com>
+ * @license GNU General Public License, Version 3; see LICENSE
+ */
 
-defined('_JEXEC') or die;
+// No direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Function to parse route.
  *
- * @param   array   $query    URL query.
- * @return  array
+ * @param  array  $query  URL query.
+ *
+ * @return array
  */
 function SphinxSearchBuildRoute(&$query)
 {
     $segments = array();
-    if(isset($query['view']))
-    {
-        //$segments[] = $query['view'];
+    if (isset($query['view'])) {
         unset($query['view']);
     }
-    if(isset($query['id']))
-    {
+    if (isset($query['id'])) {
         $segments[] = $query['id'];
         unset($query['id']);
     };
@@ -28,8 +36,9 @@ function SphinxSearchBuildRoute(&$query)
 /**
  * Function to do actual routing.
  *
- * @param   array    $segments    Parts of URL query.
- * @return  array
+ * @param  array  $segments  Parts of URL query.
+ *
+ * @return array
  */
 function SphinxSearchParseRoute($segments)
 {
@@ -39,8 +48,7 @@ function SphinxSearchParseRoute($segments)
     $item = $menu->getActive();
 
     $count = count($segments);
-    switch($item->query['view'])
-    {
+    switch($item->query['view']) {
     case 'search':
         $id = &$segments[$count-1];
         $vars['id']   = $id;

@@ -1,71 +1,33 @@
 <?php
 /**
+ * Front controller.
  *
+ * Part of Joomla Sphinx Search Component Package
  *
- * @author		Ivinco LTD.
- * @package		Ivinco
- * @subpackage	SphinxSearch
- * @copyright	Copyright (C) 2011 Ivinco Ltd. All rights reserved.
- * @license     This file is part of the SphinxSearch component for Joomla!.
-
-   The SphinxSearch component for Joomla! is free software: you can redistribute it
-   and/or modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation, either version 3 of the License,
-   or (at your option) any later version.
-
-   The SphinxSearch component for Joomla! is distributed in the hope that it will be
-   useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the SphinxSearch component for Joomla!.  If not, see
-   <http://www.gnu.org/licenses/>.
-
- * Contributors
- * Please feel free to add your name and email (optional) here if you have
- * contributed any source code changes.
- * Name							Email
- * Ivinco					<opensource@ivinco.com>
- *
+ * @package Joomla-Sphinx-Search-component
+ * @copyright Copyright (C) 2012-2013 Dmitri Perunov <dmitri.perunov@gmail.com>
+ * @license GNU General Public License, Version 3; see LICENSE
  */
 
-// No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
 
-// Require the base controller
-require_once( JPATH_COMPONENT.DS.'controller.php' );
+jimport('joomla.application.component.controller');
 
-// Require sphinx search api
+// We need a sphinx api, so we should find it first.
 jimport('joomla.filesystem.file');
-define('SPHINXAPI_RLTV', 'sphinxapi.php');
-define('SPHINXAPI_LIB', JPATH_LIBRARIES . DS . 'sphinx' . DS . SPHINXAPI_RLTV);
-define('SPHINXAPI_ABSLT', '/usr/share/sphinx/api/' . SPHINXAPI_RLTV);
-if (JFile::exists(SPHINXAPI_RLTV)) {
-    require_once(SPHINXAPI_RLTV);
-} elseif (JFile::exists(SPHINXAPI_LIB)) {
-    require_once(SPHINXAPI_LIB);
-} elseif (JFile::exists(SPHINXAPI_ABSLT)) {
-    require_once(SPHINXAPI_ABSLT);
+define('SPHINXAPI_FILENAME', 'sphinxapi.php');
+define('SPHINXAPI_LOCAL', JPATH_COMPONENT . '/' . SPHINXAPI_FILENAME);
+define('SPHINXAPI_JLIB', JPATH_LIBRARIES . '/sphinx/' . SPHINXAPI_FILENAME);
+define('SPHINXAPI_SYSTEM', '/usr/share/sphinx/api/' . SPHINXAPI_FILENAME);
+if (JFile::exists(SPHINXAPI_LOCAL)) {
+    require_once(SPHINXAPI_LOCAL);
+} elseif (JFile::exists(SPHINXAPI_JLIB)) {
+    require_once(SPHINXAPI_JLIB);
+} elseif (JFile::exists(SPHINXAPI_SYSTEM)) {
+    require_once(SPHINXAPI_SYSTEM);
 }
 
-// Require specific controller if requested
-if(true == ($controller = JRequest::getWord('controller'))) {
-    $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
-    if (file_exists($path)) {
-        require_once $path;
-    } else {
-        $controller = '';
-    }
-}
-
-// Create the controller
-$classname    = 'SphinxSearchController'.$controller;
-$controller   = new $classname( );
-
-// Perform the Request task
-$controller->execute( JRequest::getWord( 'task' ) );
-
-// Redirect if set by the controller
+$controller = JController::getInstance('SphinxSearch');
+$controller->execute(JRequest::getCmd('task'));
 $controller->redirect();
-

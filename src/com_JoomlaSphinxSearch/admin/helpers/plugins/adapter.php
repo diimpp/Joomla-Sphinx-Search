@@ -1,26 +1,26 @@
 <?php
 /**
- * @package     SphinxSearch
- * @subpackage  com_sphinxsearch
+ * Part of Joomla Sphinx Search Component Package
+ *
+ * @package Joomla-Sphinx-Search-component
+ * @copyright Copyright (C) 2012-2013 Dmitri Perunov <dmitri.perunov@gmail.com>
+ * @license GNU General Public License, Version 3; see LICENSE
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Adapter class for the Sphinxsearch plugins.
- *
- * @package     SphinxSearch
- * @subpackage  com_sphinxsearch
+ * Adapter class for the SphinxSearch plugins.
  */
 abstract class SphinxSearchAdapter extends JPlugin
 {
-	/**
-	 * The database object.
-	 *
-	 * @var object
-	 */
+    /**
+     * The database object.
+     *
+     * @var object
+     */
     protected $_db;
-    
+
     /**
      * Total search time in seconds.
      *
@@ -98,7 +98,8 @@ abstract class SphinxSearchAdapter extends JPlugin
      *
      * Triggered by component search model.
      *
-     * @param string $query
+     * @param  string  $query
+     *
      * @return array
      */
     abstract public function onSphinxSearch($query);
@@ -106,31 +107,38 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Constructor.
      *
-     * @param object $subject
-     * @param array $config
+     * @param  object  $subject
+     * @param  array   $config
+     *
      * @return void
      */
+<<<<<<< Updated upstream
 	public function __construct($subject, $config)
 	{
-        parent::__construct($subject, $config);
+		parent::__construct(&$subject, $config);
 
 		$this->_db = JFactory::getDBO();
 
         // TODO: Replace with options from DB. (2012-08-02 Thu 04:14 PM (NOVT), Dmitri Perunov)
+=======
+    public function __construct($subject, $config)
+    {
+        parent::__construct($subject, $config);
+        $this->_db = JFactory::getDBO();
+        // TODO: Replace with options from DB. (Dmitri Perunov)
+>>>>>>> Stashed changes
         $server         = 'localhost';
         $port           = (int) 9312;
         $this->_index   = 'test1';
-
         $this->_setSphinx($server, $port);
         $this->_setLimits();
-	}
+    }
 
     /**
      * Event handler.
      *
      * Triggered by com_sphinxsearch search model.
      *
-     * @param string $query
      * @return array
      */
     public function onPrepareSphinxSearch()
@@ -142,8 +150,9 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Init sphinx client.
      *
-     * @param string $server
-     * @param int $port
+     * @param  string  $server
+     * @param  int     $port
+     *
      * @return bool
      */
     private function _setSphinx($server, $port)
@@ -156,15 +165,15 @@ abstract class SphinxSearchAdapter extends JPlugin
                 return false;
             }
         }
-
         return true;
     }
 
     /**
      * Setter of search limits.
      *
-     * @param int $offset
-     * @param int $limit
+     * @param  int  $offset
+     * @param  int  $limit
+     *
      * @return bool
      */
     protected function _setLimits($offset = 0, $limit = 10)
@@ -179,7 +188,8 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Perform search.
      *
-     * @param string $query search query
+     * @param string  $query  search query
+     *
      * @return bool
      */
     private function _search($query)
@@ -218,24 +228,23 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Get DB rows ids of search results.
      *
-     * @param string $query search query
+     * @param  string  $query  search query
+     *
      * @return array
      */
     protected function _getIds($query)
     {
         if (!isset($this->_matches)) {
-            if ($this->_search(&$query)) {
+            if ($this->_search($query)) {
                 return array_keys($this->_matches);
             }
         }
-
         return $this->_matches;
     }
 
     /**
      * Getter of total found number results.
      *
-     * @param string $query search query
      * @return array
      */
     protected function _getTotal()
@@ -243,7 +252,6 @@ abstract class SphinxSearchAdapter extends JPlugin
         if (!isset($this->_total)) {
             return false;
         }
-
         return $this->_total;
     }
 
@@ -260,60 +268,61 @@ abstract class SphinxSearchAdapter extends JPlugin
      * SPH_MATCH_EXTENDED2  The same as SPH_MATCH_EXTENDED plus ranking and
      * quorum searching support.
      *
-     * @param string $mode
+     * @param  string  $mode
+     *
      * @return bool
      */
     protected function _setMatchMode($mode)
     {
         switch ($mode) {
-            case 'any':
-                $this->_sphinx->setMatchMode(SPH_MATCH_ANY);
-                break;
-            case 'phrase':
-                $this->_sphinx->setMatchMode(SPH_MATCH_PHRASE);
-                break;
-            case 'boolean':
-                $this->_sphinx->setMatchMode(SPH_MATCH_BOOLEAN);
-                break;
-            case 'extended':
-                $this->_sphinx->setMatchMode(SPH_MATCH_EXTENDED);
-                break;
-            case 'fullscan':
-                $this->_sphinx->setMatchMode(SPH_MATCH_FULLSCAN);
-                break;
-            case 'extended2':
-                $this->_sphinx->setMatchMode(SPH_MATCH_EXTENDED2);
-                break;
-            case 'all':
-            default:
-                $this->_sphinx->setMatchMode(SPH_MATCH_ALL);
-                break;
+        case 'any':
+            $this->_sphinx->setMatchMode(SPH_MATCH_ANY);
+            break;
+        case 'phrase':
+            $this->_sphinx->setMatchMode(SPH_MATCH_PHRASE);
+            break;
+        case 'boolean':
+            $this->_sphinx->setMatchMode(SPH_MATCH_BOOLEAN);
+            break;
+        case 'extended':
+            $this->_sphinx->setMatchMode(SPH_MATCH_EXTENDED);
+            break;
+        case 'fullscan':
+            $this->_sphinx->setMatchMode(SPH_MATCH_FULLSCAN);
+            break;
+        case 'extended2':
+            $this->_sphinx->setMatchMode(SPH_MATCH_EXTENDED2);
+            break;
+        case 'all':
+        default:
+            $this->_sphinx->setMatchMode(SPH_MATCH_ALL);
+            break;
         }
 
     }
 
     protected function _setOrder($order)
     {
-    // TODO: Rewrite it. (2012-08-06 Mon 02:02 PM (NOVT), Dmitri Perunov)
-    //    switch ($order) {
-    //        case 'newest':
-    //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_DESC, 'created');
-    //            break;
-    //        case 'oldest':
-    //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'created');
-    //            break;
-    //        case 'popular':
-    //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_DESC, 'hits');
-    //            break;
-    //        case 'category':
-    //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'catid');
-    //            break;
-    //        case 'alpha':
-    //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'title');
-    //            break;
-    //        default:
-    //            break;
-    //    }
+        // TODO: Rewrite it. (2012-08-06 Mon 02:02 PM (NOVT), Dmitri Perunov)
+        //    switch ($order) {
+        //        case 'newest':
+        //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_DESC, 'created');
+        //            break;
+        //        case 'oldest':
+        //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'created');
+        //            break;
+        //        case 'popular':
+        //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_DESC, 'hits');
+        //            break;
+        //        case 'category':
+        //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'catid');
+        //            break;
+        //        case 'alpha':
+        //            $this->_sphinx->setSortMode(SPH_SORT_ATTR_ASC, 'title');
+        //            break;
+        //        default:
+        //            break;
+        //    }
         return false;
     }
 }

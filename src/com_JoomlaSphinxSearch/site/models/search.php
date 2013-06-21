@@ -1,66 +1,74 @@
 <?php
+/**
+ * Part of Joomla Sphinx Search Component Package
+ *
+ * @package Joomla-Sphinx-Search-component
+ * @copyright Copyright (C) 2012-2013 Dmitri Perunov <dmitri.perunov@gmail.com>
+ * @license GNU General Public License, Version 3; see LICENSE
+ */
 
 // No direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
-jimport( 'joomla.application.component.model' );
+jimport('joomla.application.component.model');
 jimport('joomla.html.pagination');
 
 /**
- * SphinxSearch search model.
- *
- * @package     SphinxSearch
- * @subpackage  com_sphinxsearch
+ * SphinxSearch search model class.
  */
 class SphinxSearchModelSearch extends JModel
 {
-	/**
+    /**
      * Plugin type to work with.
      *
      * All SphinxSearch plugins should have this type.
-	 *
-	 * @const   string
-	 */
+     *
+     * @const string
+     */
     const PLUGINTYPE = 'sphinxsearch';
 
-	/**
+    /**
      * Search results.
-	 *
-	 * @var    array
-	 */
+     *
+     * @var array
+     */
     private $_matches;
 
-	/**
+    /**
      * Number of search results.
-	 *
-	 * @var    int
-	 */
+     *
+     * @var int
+     */
     private $_total;
 
-	/**
-	 * Array of params to prepare search.
-	 *
-	 * @var    array
-	 */
+    /**
+     * Array of params to prepare search.
+     *
+     * @var array
+     */
     private $_params;
 
     /*
-    // XXX: Example of state use. (2012-08-20 Mon 05:59 PM (NOVT), Dmitri Perunov)         
+    // XXX: Example of state use. (Dmitri Perunov)         
     public function __construct()
     {
         parent::__construct();
 
         $application = JFactory::getApplication("site");
 
-        $this->setState('limit', $application->getUserStateFromRequest('com_sphinxsearch.limit', 'limit', 10, 'int'));
-        $this->setState('limitstart', JRequest::getVar('limitstart', 0, '', 'int'));
+        $this->setState('limit',
+            $application->getUserStateFromRequest('com_sphinxsearch.limit',
+            'limit', 10, 'int')
+        );
+        $this->setState('limitstart',
+            JRequest::getVar('limitstart', 0, '', 'int'));
     }
      */
 
     /**
      * Getter for total search results.
      *
-     * @return  mixed   Int on success, false if called before search.
+     * @return mixed  Int on success, false if called before search.
      */
     public function getTotal()
     {
@@ -74,7 +82,7 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Getter for parameters.
      *
-     * @return  array
+     * @return array
      */
     public function getParams()
     {
@@ -88,9 +96,10 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Getter for pagination.
      *
-     * @param   int  $offset
-     * @param   int  $limit
-     * @return  object
+     * @param  int  $offset
+     * @param  int  $limit
+     *
+     * @return object
      */
     public function getPagination($offset = 0, $limit = 10)
     {
@@ -104,14 +113,14 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Getter for search results.
      *
-     * @param   string  $query
-     * @return  mixed   Array on success.
+     * @param  string  $query
+     *
+     * @return mixed   Array on success.
      */
     public function getResults($query)
     {
         if (!isset($this->_matches)) {
-            if (!$this->_search($query))
-            {
+            if (!$this->_search($query)) {
                 return false;
             }
         }
@@ -122,12 +131,13 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Perform search.
      *
-     * @param   string   $query
-     * @return  bool
+     * @param  string  $query
+     *
+     * @return bool
      */
     private function _search($query) 
     {
-        // TODO: Make some sanitization action on input. (2012-07-26 Thu 04:19 PM (NOVT), Dmitri Perunov)
+        // TODO: Make some sanitization action on input. (Dmitri Perunov)
         if (empty($query) || !is_string($query)) {
             return false;
         }
@@ -135,7 +145,7 @@ class SphinxSearchModelSearch extends JModel
         $plugins = JPluginHelper::getPlugin($this::PLUGINTYPE);
         if (empty($plugins)) {
             // TODO: Return message to admin part that no sphinx plg
-            // enabled or installed. (2012-07-30 Mon 06:57 PM (NOVT), Dmitri Perunov)
+            // enabled or installed. (Dmitri Perunov)
             return false;
         }
 
@@ -144,8 +154,6 @@ class SphinxSearchModelSearch extends JModel
             $dispatcher = JDispatcher::getInstance();
             $params     = $dispatcher->trigger('onPrepareSphinxSearch');
             $results    = $dispatcher->trigger('onSphinxSearch', $query);
-
-
             // HACK: An associative array was returned in another array with
             // numeric index. WTF? (2012-08-07 Tue 04:59 PM (NOVT), Dmitri Perunov)
             $this->_matches     = &$results[0]['matches'];
