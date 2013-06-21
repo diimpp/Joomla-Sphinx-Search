@@ -1,18 +1,12 @@
-Joomla Sphinx Search component tutorial
-========
+# Work in progress. Not usable until you don't mind some programming by yourself
+# Joomla Sphinx Search
 
-This is fork of [https://github.com/Ivinco/Joomla-Sphinx-Search-component](https://github.com/Ivinco/Joomla-Sphinx-Search-component)
-
-Description
---------
-Joomla Sphinx search component enables the Sphinx-powered search with high-performance and more relevant search results.
+Brings the power of the [sphinx search engine](htpp://sphinxsearch.com/) in your Joomla!
 
 ### Features:
 
  *   Google-like search syntax;
  *   High searching performance;
- *   Improved search result relevance;
- *   Supports friendly URLs SEO settings;
  *   Supports morphological word forms dictionaries;
  *   Supports stemming (English, Russian and Czech are built-in);
  *   Supports stopwords;
