@@ -1,7 +1,7 @@
 # Work in progress. Not usable until you don't mind some programming by yourself
 # Joomla Sphinx Search
 
-Brings the power of the [sphinx search engine](htpp://sphinxsearch.com/) in your Joomla!
+Brings the power of the [sphinx search engine](htpp://sphinxsearch.com/) into your Joomla!
 
 ### Features:
 
