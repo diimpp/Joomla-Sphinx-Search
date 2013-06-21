@@ -28,7 +28,7 @@ if (JFile::exists(SPHINXAPI_LOCAL)) {
 }
 
 // Require specific controller if requested
-if(true == ($controller = JRequest::getWord('controller'))) {
+if (true == ($controller = JRequest::getWord('controller'))) {
     $path = JPATH_COMPONENT.DS.'controllers'.DS.$controller.'.php';
 
     if (file_exists($path)) {

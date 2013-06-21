@@ -38,7 +38,7 @@ class SphinxSearchController extends JController
         );
     }
 
-    function display()
+    public function display()
     {
         $viewParam = JRequest::getWord('view');
         if (empty($viewParam)) {
@@ -49,12 +49,12 @@ class SphinxSearchController extends JController
             $model = $this->getModel($viewParam);
             $view->setModel($model, true);
             //check sphinx is up
-            $view->sphinxRunning = $this->_checkSphinxConnection();
+            $view->sphinxRunning = $this->checkSphinxConnection();
         }
         $view->display();
     }
 
-    function _checkSphinxConnection()
+    private function checkSphinxConnection()
     {
         $configuration = new SphinxSearchConfig();
         $client = new SphinxClient();
@@ -67,6 +67,7 @@ class SphinxSearchController extends JController
         if (empty($error)) {
             $running = true;
         }
+
         return $running;
     }
 }

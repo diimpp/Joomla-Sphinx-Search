@@ -32,24 +32,24 @@ class SphinxSearchModelSearch extends JModel
      *
      * @var array
      */
-    private $_matches;
+    private $matches;
 
     /**
      * Number of search results.
      *
      * @var int
      */
-    private $_total;
+    private $total;
 
     /**
      * Array of params to prepare search.
      *
      * @var array
      */
-    private $_params;
+    private $params;
 
     /*
-    // XXX: Example of state use. (Dmitri Perunov)         
+    // XXX: Example of state use. (Dmitri Perunov)
     public function __construct()
     {
         parent::__construct();
@@ -68,15 +68,15 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Getter for total search results.
      *
-     * @return mixed  Int on success, false if called before search.
+     * @return mixed Int on success, false if called before search.
      */
     public function getTotal()
     {
-        if (!isset($this->_total)) {
+        if (!isset($this->total)) {
             return false;
         }
 
-        return $this->_total;
+        return $this->total;
     }
 
     /**
@@ -86,18 +86,18 @@ class SphinxSearchModelSearch extends JModel
      */
     public function getParams()
     {
-        if (!isset($this->_params)) {
+        if (!isset($this->params)) {
             return false;
         }
 
-        return $this->_params;
+        return $this->params;
     }
 
     /**
      * Getter for pagination.
      *
-     * @param  int  $offset
-     * @param  int  $limit
+     * @param int $offset
+     * @param int $limit
      *
      * @return object
      */
@@ -113,29 +113,29 @@ class SphinxSearchModelSearch extends JModel
     /**
      * Getter for search results.
      *
-     * @param  string  $query
+     * @param string $query
      *
-     * @return mixed   Array on success.
+     * @return mixed Array on success.
      */
     public function getResults($query)
     {
-        if (!isset($this->_matches)) {
-            if (!$this->_search($query)) {
+        if (!isset($this->matches)) {
+            if (!$this->search($query)) {
                 return false;
             }
         }
 
-        return $this->_matches;
+        return $this->matches;
     }
 
     /**
      * Perform search.
      *
-     * @param  string  $query
+     * @param string $query
      *
      * @return bool
      */
-    private function _search($query) 
+    private function search($query)
     {
         // TODO: Make some sanitization action on input. (Dmitri Perunov)
         if (empty($query) || !is_string($query)) {
@@ -156,11 +156,11 @@ class SphinxSearchModelSearch extends JModel
             $results    = $dispatcher->trigger('onSphinxSearch', $query);
             // HACK: An associative array was returned in another array with
             // numeric index. WTF? (2012-08-07 Tue 04:59 PM (NOVT), Dmitri Perunov)
-            $this->_matches     = &$results[0]['matches'];
-            //$this->_searchTime  = &$results[0]['time'];
-            $this->_total       = &$results[0]['total'];
-            //$this->_totalFound  = &$results[0]['total_found'];
-            $this->_params      = &$params[0];
+            $this->matches     = &$results[0]['matches'];
+            //$this->searchTime  = &$results[0]['time'];
+            $this->total       = &$results[0]['total'];
+            //$this->totalFound  = &$results[0]['total_found'];
+            $this->params      = &$params[0];
         }
 
         return true;

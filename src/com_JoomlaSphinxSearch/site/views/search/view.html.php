@@ -17,7 +17,7 @@ jimport('joomla.application.component.view');
  */
 class SphinxSearchViewSearch extends JView
 {
-    function display($tpl = null)
+    public function display($tpl = null)
     {
         // Initialise variables.
         $app        = JFactory::getApplication();
@@ -28,7 +28,6 @@ class SphinxSearchViewSearch extends JView
         $menu       = $menus->getActive();
         $params     = $app->getParams();
 
-
         // Because the application sets a default page title, we need to get it
         // right from the menu item itself.
         if (is_object($menu)) {
@@ -36,10 +35,10 @@ class SphinxSearchViewSearch extends JView
             $menu_params->loadString($menu->params);
             if (!$menu_params->get('page_title')) {
                 $params->set('page_title', JText::_('COM_SPHINXSEARCH_SEARCH'));
-            }   
+            }
         } else {
             $params->set('page_title',  JText::_('COM_SPHINXSEARCH_SEARCH'));
-        }   
+        }
 
         $title = $params->get('page_title');
         if ($app->getCfg('sitename_pagetitles', 0) == 1) {
@@ -50,19 +49,19 @@ class SphinxSearchViewSearch extends JView
             $title = JText::sprintf(
                 'JPAGETITLE', $title, $app->getCfg('sitename')
             );
-        }   
+        }
         $this->document->setTitle($title);
 
-        if ($params->get('menu-meta_description')) {   
+        if ($params->get('menu-meta_description')) {
             $this->document->setDescription(
                 $params->get('menu-meta_description')
             );
-        }   
-        if ($params->get('menu-meta_keywords')) {   
+        }
+        if ($params->get('menu-meta_keywords')) {
             $this->document->setMetadata(
                 'keywords', $params->get('menu-meta_keywords')
             );
-        }   
+        }
         if ($params->get('robots')) {
             $this->document->setMetadata('robots', $params->get('robots'));
         }
@@ -80,7 +79,6 @@ class SphinxSearchViewSearch extends JView
         $limit = JRequest::getVar('limit', 10, 'get', 'int');
         $this->pagination = $model->getPagination($offset, $limit);
 
-
         // Form.
         jimport('joomla.form.form');
         JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
@@ -88,7 +86,6 @@ class SphinxSearchViewSearch extends JView
             'jform', 'input', array('array' => true), true
         );
         $this->form->setFieldAttribute('searchword', 'default', $query);
-
 
         // Get auxiliary data from plugin.
         $prmtrs = $model->getParams();
@@ -126,17 +123,17 @@ class SphinxSearchViewSearch extends JView
         parent::display($tpl);
     }
 
-    /** 
+    /**
      * Method to get alias of menu.
      *
-     * @param  object  $menus
-     * @param  string  $extension
-     * @param  string  $template
+     * @param object $menus
+     * @param string $extension
+     * @param string $template
      *
-     * @return string  Full path to the layout file to use.
+     * @return string Full path to the layout file to use.
      */
     private function _getMenuAlias(JMenuSite $menus, $extension, $template)
-    {   
+    {
         if (!isset($extension) || !isset($template)) {
             return false;
         }
@@ -150,19 +147,19 @@ class SphinxSearchViewSearch extends JView
         }
 
         return false;
-    }   
+    }
 
-    /** 
+    /**
      * Method to get the layout file for search result object.
      *
-     * @param  string  $extension
-     * @param  string  $template
-     * @param  string  $layout  The layout file to check.
+     * @param string $extension
+     * @param string $template
+     * @param string $layout    The layout file to check.
      *
-     * @return string  Full path to the layout file to use.
+     * @return string Full path to the layout file to use.
      */
     private function _getLayoutPath($extension, $template, $layout)
-    {   
+    {
         if (!isset($extension) || !isset($template) || !isset($layout)) {
             return false;
         }
@@ -180,5 +177,5 @@ class SphinxSearchViewSearch extends JView
         }
 
         return false;
-    }   
+    }
 }

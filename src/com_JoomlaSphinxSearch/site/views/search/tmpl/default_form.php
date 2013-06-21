@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 <form action="<?php echo JRequest::getURI(); ?>" method="post" name="adminForm" class="sphinx-search-form">
     <div class="sphinx-query">
-<?php 
+<?php
 foreach ($this->form->getFieldset() as $form) {
     echo $form->input;
 }

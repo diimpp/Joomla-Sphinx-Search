@@ -17,33 +17,26 @@ jimport('joomla.application.component.helper');
  */
 class SphinxsearchHelperRoute
 {
-    private $_app;
-    private $_menus;
+    private $app;
+    private $menus;
 
     public function __construct()
     {
-        $this->_app   = JFactory::getApplication();
-        $this->_menus = $this->_app->getMenu();
+        $this->app   = JFactory::getApplication();
+        $this->menus = $this->app->getMenu();
     }
 
     /**
      * Method to get the route for a search page.
      *
-     * @param  int     $f  The search filter id. [optional]
-     * @param  string  $q  The search query string. [optional]
-     *
-     * @return string  The search route.
-     *
-     * @since  2.5
+     * @return string The search route.
      */
     public static function getSearchRoute()
     {
         // Get the base route.
         $url        = 'index.php?option=com_sphinxsearch&view=search';
-
         $app        = JFactory::getApplication();
         $menus	    = $app->getMenu();
-
         $menuItem   = $menus->getItems('link', $url, true);
 
         return $menuItem->route;
@@ -52,10 +45,10 @@ class SphinxsearchHelperRoute
     /**
      * Method to get the route for an advanced search page.
      *
-     * @param   integer  $f  The search filter id. [optional]
-     * @param   string   $q  The search query string. [optional]
+     * @param integer $f The search filter id. [optional]
+     * @param string  $q The search query string. [optional]
      *
-     * @return  string  The advanced search route.
+     * @return string The advanced search route.
      *
      * @since   2.5
      */
@@ -90,9 +83,9 @@ class SphinxsearchHelperRoute
      * Method to get the most appropriate menu item for the route based on the
      * supplied query needles.
      *
-     * @param   array  $query  An array of URL parameters.
+     * @param array $query An array of URL parameters.
      *
-     * @return  mixed  An integer on success, null otherwise.
+     * @return mixed An integer on success, null otherwise.
      *
      * @since   2.5
      */

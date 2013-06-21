@@ -48,12 +48,13 @@ function SphinxSearchParseRoute($segments)
     $item = $menu->getActive();
 
     $count = count($segments);
-    switch($item->query['view']) {
+    switch ($item->query['view']) {
     case 'search':
         $id = &$segments[$count-1];
         $vars['id']   = $id;
         $vars['view'] = 'search';
         break;
     }
+
     return $vars;
 }

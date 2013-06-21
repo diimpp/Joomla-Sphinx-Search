@@ -7,6 +7,7 @@
  * @license GNU General Public License, Version 3; see LICENSE
  */
 
+//no direct access
 defined('_JEXEC') or die;
 
 /**
@@ -92,13 +93,12 @@ abstract class SphinxSearchAdapter extends JPlugin
      */
     protected $_layout;
 
-
     /**
      * Event handler.
      *
      * Triggered by component search model.
      *
-     * @param  string  $query
+     * @param string $query
      *
      * @return array
      */
@@ -107,26 +107,16 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Constructor.
      *
-     * @param  object  $subject
-     * @param  array   $config
+     * @param object $subject
+     * @param array  $config
      *
      * @return void
      */
-<<<<<<< Updated upstream
-	public function __construct($subject, $config)
-	{
-		parent::__construct(&$subject, $config);
-
-		$this->_db = JFactory::getDBO();
-
-        // TODO: Replace with options from DB. (2012-08-02 Thu 04:14 PM (NOVT), Dmitri Perunov)
-=======
     public function __construct($subject, $config)
     {
         parent::__construct($subject, $config);
         $this->_db = JFactory::getDBO();
         // TODO: Replace with options from DB. (Dmitri Perunov)
->>>>>>> Stashed changes
         $server         = 'localhost';
         $port           = (int) 9312;
         $this->_index   = 'test1';
@@ -150,8 +140,8 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Init sphinx client.
      *
-     * @param  string  $server
-     * @param  int     $port
+     * @param string $server
+     * @param int    $port
      *
      * @return bool
      */
@@ -165,20 +155,21 @@ abstract class SphinxSearchAdapter extends JPlugin
                 return false;
             }
         }
+
         return true;
     }
 
     /**
      * Setter of search limits.
      *
-     * @param  int  $offset
-     * @param  int  $limit
+     * @param int $offset
+     * @param int $limit
      *
      * @return bool
      */
     protected function _setLimits($offset = 0, $limit = 10)
     {
-        if(!$this->_sphinx->setLimits($offset, $limit)) {
+        if (!$this->_sphinx->setLimits($offset, $limit)) {
             return false;
         }
 
@@ -188,7 +179,7 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Perform search.
      *
-     * @param string  $query  search query
+     * @param string $query search query
      *
      * @return bool
      */
@@ -228,7 +219,7 @@ abstract class SphinxSearchAdapter extends JPlugin
     /**
      * Get DB rows ids of search results.
      *
-     * @param  string  $query  search query
+     * @param string $query search query
      *
      * @return array
      */
@@ -239,6 +230,7 @@ abstract class SphinxSearchAdapter extends JPlugin
                 return array_keys($this->_matches);
             }
         }
+
         return $this->_matches;
     }
 
@@ -252,6 +244,7 @@ abstract class SphinxSearchAdapter extends JPlugin
         if (!isset($this->_total)) {
             return false;
         }
+
         return $this->_total;
     }
 
@@ -262,13 +255,13 @@ abstract class SphinxSearchAdapter extends JPlugin
      * SPH_MATCH_ANY        Match any of query words.
      * SPH_MATCH_PHRASE     Match query as a phrase, requiring perfect match.
      * SPH_MATCH_BOOLEAN    Match query as a boolean expression.
-     * SPH_MATCH_EXTENDED   Match query as an expression in Sphinx internal 
+     * SPH_MATCH_EXTENDED   Match query as an expression in Sphinx internal
      * query language.
      * SPH_MATCH_FULLSCAN   Enables fullscan.
      * SPH_MATCH_EXTENDED2  The same as SPH_MATCH_EXTENDED plus ranking and
      * quorum searching support.
      *
-     * @param  string  $mode
+     * @param string $mode
      *
      * @return bool
      */

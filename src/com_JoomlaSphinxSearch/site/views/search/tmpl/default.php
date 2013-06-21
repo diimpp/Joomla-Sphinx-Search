@@ -23,7 +23,7 @@ defined('_JEXEC') or die('Restricted access');
 <br />
 <?php echo $this->loadTemplate('form'); ?>
 
-<?php 
+<?php
 if (!empty($this->results)) : ?>
     <div class="sphinx-total-results">
         <?php echo $this->pagination->getResultsCounter(); ?>
@@ -41,7 +41,7 @@ if (!empty($this->results)) : ?>
     <?php echo JText::_('COM_SPHINXSEARCH_FORM_INPUT_NO_RESULTS'); ?>
 <?php endif; ?>
 
-<?php 
+<?php
 switch ($this->subLayout) {
 case 'custom':
     // Tricky include of another component sublayout as local one.

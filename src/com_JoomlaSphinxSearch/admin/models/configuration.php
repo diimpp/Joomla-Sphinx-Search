@@ -1,33 +1,10 @@
 <?php
 /**
+ * Part of Joomla Sphinx Search Component Package
  *
- *
- * @author		Ivinco LTD.
- * @package		Ivinco
- * @subpackage	SphinxSearch
- * @copyright	Copyright (C) 2011 Ivinco Ltd. All rights reserved.
- * @license     This file is part of the SphinxSearch component for Joomla!.
-
-   The SphinxSearch component for Joomla! is free software: you can redistribute it
-   and/or modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation, either version 3 of the License,
-   or (at your option) any later version.
-
-   The SphinxSearch component for Joomla! is distributed in the hope that it will be
-   useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with the SphinxSearch component for Joomla!.  If not, see
-   <http://www.gnu.org/licenses/>.
-
- * Contributors
- * Please feel free to add your name and email (optional) here if you have
- * contributed any source code changes.
- * Name							Email
- * Ivinco					<opensource@ivinco.com>
- *
+ * @package Joomla-Sphinx-Search-component
+ * @copyright Copyright (C) 2012-2013 Dmitri Perunov <dmitri.perunov@gmail.com>
+ * @license GNU General Public License, Version 3; see LICENSE
  */
 
 //no direct access
@@ -38,15 +15,13 @@ jimport('joomla.filesystem.file');
 
 class SphinxSearchModelConfiguration extends JModel
 {
-    var $configuration;
+    public $configuration;
 
     public function __construct()
     {
-	parent::__construct();
-
+        parent::__construct();
         require_once($this->getConfig());
-
-	$this->configuration = new SphinxSearchConfig();
+        $this->configuration = new SphinxSearchConfig();
     }
 
     /**
@@ -56,29 +31,29 @@ class SphinxSearchModelConfiguration extends JModel
      */
     public function getConfig()
     {
-	    return JPATH_COMPONENT_ADMINISTRATOR . DS . "configuration.php";
+        return JPATH_COMPONENT_ADMINISTRATOR . DS . "configuration.php";
     }
 
     public function getParam($name)
     {
-    	return $this->configuration->$name;
+        return $this->configuration->$name;
     }
 
     public function save($array)
     {
-	require_once($this->getConfig());
+        require_once($this->getConfig());
 
-	$config = new JRegistry('sphinxconfig');
-	$config_array = array();
+        $config = new JRegistry('sphinxconfig');
+        $config_array = array();
 
-	$config_array["hostname"] = JArrayHelper::getValue($array, "hostname");
-	$config_array["port"] = JArrayHelper::getValue($array, "port");
-	$config_array["index"] = JArrayHelper::getValue($array, "index");
-	$config->loadArray($config_array);
+        $config_array["hostname"] = JArrayHelper::getValue($array, "hostname");
+        $config_array["port"] = JArrayHelper::getValue($array, "port");
+        $config_array["index"] = JArrayHelper::getValue($array, "index");
+        $config->loadArray($config_array);
 
-    // TODO: Add no direct access. (2012-07-25 Wed 05:41 PM (NOVT), Dmitri Perunov)
-    JFile::write($this->getConfig(), $config->toString("PHP", array("class"=>"SphinxSearchConfig")));
+        // TODO: Add no direct access. (2012-07-25 Wed 05:41 PM (NOVT), Dmitri Perunov)
+        JFile::write($this->getConfig(), $config->toString("PHP", array("class"=>"SphinxSearchConfig")));
 
-	$this->configuration = new SphinxSearchConfig();
+        $this->configuration = new SphinxSearchConfig();
     }
 }
